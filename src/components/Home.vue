@@ -2,11 +2,15 @@
     <div class="home">
         <div class="home__title"> {{ title }}</div>
         
-        <div class="zodiac-board">
-            <button @click="fetchZodiacData"> click click</button>
-        </div>
+        <main class="zodiacBoard">
+            <div v-for="zodiacSign in zodiacSigns" class="zodiacBoard__sign">
+                <img :src="zodiacSign.image" :alt="zodiacSign.name">
+                <h3> {{ zodiacSign.name }} </h3>
+                <p> {{ zodiacSign.dateRange }}</p>
+            </div>
+        </main>
 
-        <Footer />
+        <!-- <Footer /> -->
 
     </div>
 </template>
@@ -18,15 +22,17 @@
         data() {
             return {
                 title: 'DAILY HOROSCOPE',
-                zodiacName: '',
-                zodiacDate: '',
-                zodiacHoroscope: '',
+                zodiacSigns: []
             }
         },
 
+        created() {
+            this.fetchZodiacData()
+        },
+
         computed: {
-            zodiacNames() {
-                return this.$store.getters.getZodiacNames;
+            zodiacData() {
+                return this.$store.getters.getZodiacData;
             }
         },
 
@@ -35,16 +41,41 @@
         },
 
         methods: {
-            async fetchZodiacData() {   /* iterate through loop with zodiac name because the API only shows one zodiac sign at the time  */
-                /* zodiacNames.forEach(name => { */
+            async fetchZodiacData() {   // iterate through loop with zodiac name because API only allows single fetching
+                this.zodiacData.forEach(zodiac => {
+                    // make async function when fetching inside loop/function
+                    const createZodiacObject = async () => {     
+                        const url = `https://aztro.sameerkumar.website/?sign=${zodiac.sign}&day=today`;
+                        const options = {method: 'POST'} // uses post, get is default
+                        const response = await fetch(url, options);
 
-                    const url = '';
-                    const response = await fetch(url);
-                    const data = await response.json();
+                        if (response.ok) {
+                            const results = await response.json(); 
+                            // create complete zodiac objects with data from store and api, then push into empty array
+                            const zodiacSign = {
+                                'name': zodiac.sign,
+                                'image': zodiac.symbol,
+                                'dateRange': results.date_range,
+                                'description': results.description,
+                                'compabtility': results.compatibility,
+                                'mood': results.mood,
+                                'luckyNumber': results.lucky_number
+                            }
+                            this.zodiacSigns.push(zodiacSign);
+                            console.log(zodiac.image);
+       
+                        } else {
+                            throw new Error('Error fetching', response.status); 
+                        }
+                    }
 
-                    console.log('SIGN: ', );
+                    try {
+                        createZodiacObject();
+                    } catch(err) {
+                        console.log(err); 
+                    }
+                })
 
-              /*   }); */
             }
         }
     }
@@ -55,7 +86,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100vh;
         width: 100vw;
         background-image: url('/images/background-home.jpg');
         background-size: cover;
@@ -63,20 +93,34 @@
     }
 
     .home__title {
-        font-size: var(--size-title);
+        font-size: 3.5em;
         font-family: var(--font-title);
         color: var(--light);
     }
 
-    .zodiac-board {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--grid-gap);
+    .zodiacBoard {
+       display: grid;
+       gap: var(--grid-gap);
+       grid-template-columns: repeat(4, 1fr);
+       padding-top: var(--padding-medium);
     }
 
-    .zodiac-board__sign {
+    .zodiacBoard__sign {
         height: var(--zodiac-size);
         width: var(--zodiac-size);
-        border: 2px solid white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--dark);
+        border-radius: 4px;
+        font-family: var(--font-body);
+        font-weight: 300;
+        color: var(--light);
+    }
+ 
+    .zodiacBoard__sign img {
+        height: var(--symbol-size);
+        width:  var(--symbol-size);
     }
 </style>

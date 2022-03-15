@@ -1,6 +1,6 @@
 <template>
-  <div class="zodiac">
-      ROUTING
+  <div class="zodiacPage">
+      
   </div>
 </template>
 
