@@ -3,10 +3,15 @@
     --font-title: 'Monoton', normal;
 
     /* TEXT SIZE */
-    --size-title: 65px;
+    --size-title: 60px;
 
     /* COLOR */
     --light: white;
 
     /* GAP */
+    --grid-gap: 40px;
+    --super-large: 70px;
+
+    /* zodiac sign size */
+    --zodiac-size: 220px;
 }
