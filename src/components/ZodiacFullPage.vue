@@ -1,6 +1,6 @@
 <template>
   <!-- show horoscope based on users click -->
-
+<!-- 
   <div class="zodiacPage" v-if="zodiacSign">
     <h1 class="zodiacPage__title"> {{ zodiacSign.sign }}</h1>
     <img :src="zodiacSign.symbol" :alt="zodiacSign.sign">
@@ -16,8 +16,8 @@
         </div>
       </section>
     </main>
-  </div>
-</template>
+  </div-->
+</template> 
 
 <script>
     export default {
@@ -32,9 +32,9 @@
             return this.$store.getters.getZodiacData;
         }
       },
-      created() {                                                                                 
-          return this.zodiacSign = this.zodiacData.find(zodiac => zodiac.sign === this.zodiac_slug)     /* return slug to the current article (give value to slug prop) source: https://router.vuejs.org/guide/essentials/passing-props.html#boolean-mode */
-      }
+     created() {                                                                                 
+          return this.zodiacSign = this.zodiacData.find(zodiac => zodiac.name === this.zodiac_slug)     /* return slug to the current article (give value to slug prop) source: https://router.vuejs.org/guide/essentials/passing-props.html#boolean-mode */
+      } 
 
     }
 </script>

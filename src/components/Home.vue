@@ -3,7 +3,7 @@
         <div class="home__title"> {{ title }}</div>
         
         <main class="zodiacBoard">
-            <div v-for="zodiacSign in zodiacSigns" class="zodiacBoard__sign">
+            <div v-for="zodiacSign in zodiacData" class="zodiacBoard__sign">
                 <RouterLink :to="{ name: 'zodiac', params: { zodiac_slug: zodiacSign.name }}" class="zodiacBoard__routerlink">
                     <img :src="zodiacSign.symbol" :alt="zodiacSign.name">
                     <h3> {{ zodiacSign.name }} </h3>
@@ -24,7 +24,7 @@
         data() {
             return {
                 title: 'DAILY HOROSCOPE',
-                zodiacSigns: []
+                zodiacSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']
             }
         },
 
@@ -44,10 +44,10 @@
 
         methods: {
             async fetchZodiacData() {   // iterate through loop with zodiac name because API only allows single fetching
-                this.zodiacData.forEach(zodiac => {
+                this.zodiacSigns.forEach(zodiac => {
                     // make async function when fetching inside loop/function
                     const createZodiacObject = async () => {     
-                        const url = `https://aztro.sameerkumar.website/?sign=${zodiac.sign}&day=today`;
+                        const url = `https://aztro.sameerkumar.website/?sign=${zodiac}&day=today`;
                         const options = {method: 'POST'} // uses post, get is default
                         const response = await fetch(url, options);
 
@@ -55,16 +55,15 @@
                             const results = await response.json(); 
                             // create complete zodiac objects with data from store and api, then push into empty array
                             const zodiacSign = {
-                                'name': zodiac.sign,
-                                'symbol': zodiac.symbol,
+                                'name': zodiac,
+                                'symbol': `/images/${zodiac}.svg`,
                                 'dateRange': results.date_range,
                                 'description': results.description,
                                 'compabtility': results.compatibility,
                                 'mood': results.mood,
                                 'luckyNumber': results.lucky_number
                             }
-                            this.zodiacSigns.push(zodiacSign); // add complete zodiac object
-                            console.log(this.zodiacSigns)
+                            this.$store.commit('addZodiac', zodiacSign) //add complete zodiac object to array in store
        
                         } else {
                             throw new Error('Error fetching', response.status); 
