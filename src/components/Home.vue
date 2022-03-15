@@ -1,4 +1,5 @@
 <template>
+    <!-- legge inn errorhandleresponse message -->
     <div class="home">
         <div class="home__title"> {{ title }}</div>
         
@@ -11,9 +12,7 @@
                 </RouterLink>
             </div>
         </main>
-
         <!-- <Footer /> -->
-
     </div>
 </template>
 
@@ -59,7 +58,7 @@
                                 'symbol': `/images/${zodiac}.svg`,
                                 'dateRange': results.date_range,
                                 'description': results.description,
-                                'compabtility': results.compatibility,
+                                'compatibility': results.compatibility,
                                 'mood': results.mood,
                                 'luckyNumber': results.lucky_number
                             }

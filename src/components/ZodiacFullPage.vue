@@ -1,9 +1,8 @@
 <template>
   <!-- show horoscope based on users click -->
-<!-- 
   <div class="zodiacPage" v-if="zodiacSign">
-    <h1 class="zodiacPage__title"> {{ zodiacSign.sign }}</h1>
-    <img :src="zodiacSign.symbol" :alt="zodiacSign.sign">
+    <h1 class="zodiacPage__title"> {{ zodiacSign.name }}</h1>
+    <img :src="zodiacSign.symbol" :alt="zodiacSign.name">
     <p class="zodiacPage__date">{{ zodiacSign.dateRange}}</p>
     <main>
       <p class="horoscope"> {{ zodiacSign.description }}</p>
@@ -16,7 +15,7 @@
         </div>
       </section>
     </main>
-  </div-->
+  </div>
 </template> 
 
 <script>
