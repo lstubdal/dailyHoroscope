@@ -1,8 +1,9 @@
 <template>
   <!-- show horoscope based on users click -->
-  <div class="zodiacPage" v-if="correctSlug">
-    <h1 class="zodiacPage__title"> {{ zodiacSign.name }}</h1>
-    <img :src="zodiacSign.symbol" :alt="zodiacSign.name">
+
+  <div class="zodiacPage" v-if="zodiacSign">
+    <h1 class="zodiacPage__title"> {{ zodiacSign.sign }}</h1>
+    <img :src="zodiacSign.symbol" :alt="zodiacSign.sign">
     <p class="zodiacPage__date">{{ zodiacSign.dateRange}}</p>
     <main>
       <p class="horoscope"> {{ zodiacSign.description }}</p>
@@ -20,10 +21,27 @@
 
 <script>
     export default {
+      props: {
+          zodiac_slug: {
+              type: String
+          },
+      },
+
+      computed: {
+        zodiacData() {
+            return this.$store.getters.getZodiacData;
+        }
+      },
+      created() {                                                                                 
+          return this.zodiacSign = this.zodiacData.find(zodiac => zodiac.sign === this.zodiac_slug)     /* return slug to the current article (give value to slug prop) source: https://router.vuejs.org/guide/essentials/passing-props.html#boolean-mode */
+      }
 
     }
 </script>
 
 <style>
+  .zodiacPage {
+    background-color: var(--dark);
+  }
 
 </style>

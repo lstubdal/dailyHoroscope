@@ -1,11 +1,14 @@
 <template>
-  
+  <ZodiacFullPage />
 </template>
 
 <script>
-export default {
-
-}
+    import ZodiacFullPage from '../components/ZodiacFullPage.vue';
+    export default {
+        components: {
+            ZodiacFullPage
+        }
+    }
 </script>
 
 <style>

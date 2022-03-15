@@ -4,9 +4,11 @@
         
         <main class="zodiacBoard">
             <div v-for="zodiacSign in zodiacSigns" class="zodiacBoard__sign">
-                <img :src="zodiacSign.image" :alt="zodiacSign.name">
-                <h3> {{ zodiacSign.name }} </h3>
-                <p> {{ zodiacSign.dateRange }}</p>
+                <RouterLink :to="{ name: 'zodiac', params: { zodiac_slug: zodiacSign.name }}" class="zodiacBoard__routerlink">
+                    <img :src="zodiacSign.symbol" :alt="zodiacSign.name">
+                    <h3> {{ zodiacSign.name }} </h3>
+                    <p> {{ zodiacSign.dateRange }}</p>
+                </RouterLink>
             </div>
         </main>
 
@@ -54,15 +56,15 @@
                             // create complete zodiac objects with data from store and api, then push into empty array
                             const zodiacSign = {
                                 'name': zodiac.sign,
-                                'image': zodiac.symbol,
+                                'symbol': zodiac.symbol,
                                 'dateRange': results.date_range,
                                 'description': results.description,
                                 'compabtility': results.compatibility,
                                 'mood': results.mood,
                                 'luckyNumber': results.lucky_number
                             }
-                            this.zodiacSigns.push(zodiacSign);
-                            console.log(zodiac.image);
+                            this.zodiacSigns.push(zodiacSign); // add complete zodiac object
+                            console.log(this.zodiacSigns)
        
                         } else {
                             throw new Error('Error fetching', response.status); 
@@ -106,16 +108,20 @@
     }
 
     .zodiacBoard__sign {
-        height: var(--zodiac-size);
-        width: var(--zodiac-size);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         background-color: var(--dark);
         border-radius: 4px;
         font-family: var(--font-body);
         font-weight: 300;
+    }
+
+    .zodiacBoard__routerlink {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: var(--zodiac-size);
+        width: var(--zodiac-size);
+        text-decoration: none;
         color: var(--light);
     }
  

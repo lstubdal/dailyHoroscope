@@ -1,0 +1,10 @@
+_____FIRST______
+- routerlink
+- zodiac fullpage 
+
+
+
+____________________
+- today, tomorrow?
+- fix everything to store
+- fullpage background with random universe image from unsplash api
