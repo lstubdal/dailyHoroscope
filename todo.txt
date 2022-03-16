@@ -3,6 +3,9 @@ _____FIRST______
 - zodiac fullpage 
 
 
+- tilbake : fetcher 2 ganger
+- ikke reload page
+
 
 ____________________
 - today, tomorrow?

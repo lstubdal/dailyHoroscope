@@ -107,7 +107,7 @@
 
     .zodiacBoard__sign {
         background-color: var(--dark);
-        border-radius: 4px;
+        border-radius: 8px;
         font-family: var(--font-body);
         font-weight: 300;
     }

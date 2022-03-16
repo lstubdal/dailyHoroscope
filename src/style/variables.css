@@ -6,15 +6,23 @@
     /* COLOR */
     --light: white;
     --dark: rgba(13, 12, 12, 0.6); /* setting alpha = 0.6 for overlay effect withour affecting text */
+    --highlight: #EA0D9F;
 
     /* GAP */
     --grid-gap: 40px;
     --super-large: 70px;
 
     /* PADDING */
+    --padding-small: 10px;
     --padding-medium: 30px;
+    --padding-large: 70px;
+    --padding-xlarge: 160px;
+
+    --margin-small: 10;
+    --margin-medium: 30px;
 
     /* SIZES */
-    --zodiac-size: 170px;
+    --zodiac-size: 165px;
     --symbol-size: 70px;
+    --symbol-size-fullpage: 90px;
 }
