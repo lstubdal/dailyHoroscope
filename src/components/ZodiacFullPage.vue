@@ -59,6 +59,15 @@
     color: var(--light);
   }
 
+  .zodiacPage__overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--dark);
+    padding: var(--padding-large);
+  }
+
   .zodiacPage__back {
     position: absolute;
     display: flex;
@@ -74,15 +83,6 @@
   .zodiacPage__back:hover {
     text-decoration: underline;
     color: var(--highlight);
-  }
-
-  .zodiacPage__overlay {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: var(--dark);
-    padding: var(--padding-large);
   }
 
   .zodiacPage__title {
@@ -113,6 +113,7 @@
   .horoscope__description {
     line-height: 1;
     font-size: 2em;
+    text-align: center;
     padding: var(--padding-medium) var(--padding-xlarge) var(--padding-large) var(--padding-xlarge);
   }
 
@@ -132,10 +133,40 @@
     align-items: center;
     font-size: 2em;
     color: var(--highlight);
+    padding: 2% 0%;
   }
 
   .horoscope__detail {
     font-size: 0.6em;
     color: var(--light); 
   }
+
+    /********* RESPONSIVE ********/
+    @media screen and (max-width: 800px) {
+        .zodiacPage__title {
+          font-size: 2.5em;
+          margin-top: var(--margin-small);
+        }
+
+        .horoscope__information {
+          justify-content: center;
+        }
+
+        .zodiacPage__symbol {
+          width: var(--symbol-size-responsive);
+          height: var(--symbol-size-responsive);
+          margin: var(--margin-small);
+        }
+
+        .horoscope__description {
+          font-size: 1.5em;
+          padding: 3%;
+        }
+
+        .horoscope__details {
+          font-size: 1.5em;
+        }
+
+
+    }
 </style>

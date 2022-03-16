@@ -24,5 +24,6 @@
     /* SIZES */
     --zodiac-size: 165px;
     --symbol-size: 70px;
-    --symbol-size-fullpage: 90px;
+    --symbol-size-responsive: 60px;
+    --symbol-size-fullpage: 80px;
 }

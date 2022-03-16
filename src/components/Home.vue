@@ -127,4 +127,31 @@
         height: var(--symbol-size);
         width:  var(--symbol-size);
     }
+
+
+    /********* RESPONSIVE TABLET ********/
+    @media screen and (max-width: 800px) {
+        .zodiacBoard {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .home__title {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: var(--padding-medium);
+        }
+    }
+
+    /********* RESPONSIVE MOBILE ********/
+    @media screen and (max-width: 600px) {
+        .zodiacBoard {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .home__title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: var(--padding-medium);
+        }
+    }
 </style>
