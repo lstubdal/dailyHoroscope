@@ -23,7 +23,6 @@
         data() {
             return {
                 title: 'DAILY HOROSCOPE',
-                zodiacSigns: ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces']
             }
         },
 
@@ -32,6 +31,10 @@
         },
 
         computed: {
+            zodiacSigns() {
+                return this.$store.getters.getZodiacSigns;
+            },
+
             zodiacData() {
                 return this.$store.getters.getZodiacData;
             }
@@ -42,39 +45,7 @@
         },
 
         methods: {
-            async fetchZodiacData() {   // iterate through loop with zodiac name because API only allows single fetching
-                this.zodiacSigns.forEach(zodiac => {
-                    // make async function when fetching inside loop/function
-                    const createZodiacObject = async () => {     
-                        const url = `https://aztro.sameerkumar.website/?sign=${zodiac}&day=today`;
-                        const options = {method: 'POST'} // uses post, get is default
-                        const response = await fetch(url, options);
-
-                        if (response.ok) {
-                            const results = await response.json(); 
-                            // create complete zodiac objects with data from store and api, then push into empty array
-                            const zodiacSign = {
-                                'name': zodiac,
-                                'symbol': `/images/${zodiac}.svg`,
-                                'dateRange': results.date_range,
-                                'description': results.description,
-                                'compatibility': results.compatibility,
-                                'mood': results.mood,
-                                'luckyNumber': results.lucky_number
-                            }
-                            this.$store.commit('addZodiac', zodiacSign) //add complete zodiac object to array in store
-       
-                        } else {
-                            throw new Error('Error fetching', response.status); 
-                        }
-                    }
-
-                    try {
-                        createZodiacObject();
-                    } catch(err) {
-                        console.log(err); 
-                    }
-                })
+            async fetchZodiacData() {
 
             }
         }
