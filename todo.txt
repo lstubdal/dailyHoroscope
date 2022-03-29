@@ -1,13 +1,9 @@
-_____FIRST______
-- routerlink
-- zodiac fullpage 
-
+_____BUGFIX______
 
 - tilbake : fetcher 2 ganger
 - ikke reload page
 
 
-____________________
+________?__________
 - today, tomorrow?
-- fix everything to store
 - fullpage background with random universe image from unsplash api

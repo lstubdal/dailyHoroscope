@@ -33,6 +33,7 @@
 </template> 
 
 <script>
+  /* bugfix => when reload zodiacfullpage data is missing  => solution: fetch again (move to store)*/
     export default {
       props: {
           zodiac_slug: {
@@ -45,6 +46,7 @@
             return this.$store.getters.getZodiacData;
         }
       },
+
      created() {                                                                                 
           return this.zodiacSign = this.zodiacData.find(zodiac => zodiac.name === this.zodiac_slug)     /* return slug to the current article (give value to slug prop) source: https://router.vuejs.org/guide/essentials/passing-props.html#boolean-mode */
       } 

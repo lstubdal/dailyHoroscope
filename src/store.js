@@ -7,6 +7,13 @@ export default {
         }
     },
 
+    mutations: {
+        addZodiac(state, zodiac) {
+/*             console.log('STORE: ', state.zodiacData ); */
+            state.zodiacData.push(zodiac);
+        }
+    },
+
     getters: {
         getZodiacSigns(state) {
             return state.zodiacSigns
@@ -16,11 +23,4 @@ export default {
             return state.zodiacData;
         }
     },
-
-    mutations: {
-        addZodiac(state, zodiac) {
-/*             console.log('STORE: ', state.zodiacData ); */
-            state.zodiacData.push(zodiac);
-        }
-    }
 }

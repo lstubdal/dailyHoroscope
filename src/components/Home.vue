@@ -57,7 +57,11 @@
 
                             if (response.ok) {
                                 const results = await response.json(); 
+                                const hei = Object.values(results);
+                                console.log('results', hei)
+
                                 // create complete zodiac objects with data from store and api, then push into empty array
+
                                 const zodiacSign = {
                                     'name': zodiac,
                                     'symbol': `/images/${zodiac}.svg`,
@@ -81,6 +85,7 @@
                         }
                     }
                 })
+                console.log('HEIHEI', this.zodiacData)
             }
         }
     }
