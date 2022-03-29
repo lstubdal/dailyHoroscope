@@ -3,7 +3,7 @@
   <div class="zodiacPage" v-if="zodiacSign">
     <RouterLink :to="{ name: 'home' }" class="zodiacPage__back">
       <img src="/images/back.svg" alt="back to homepage">
-      <span>Back to homepage</span>
+      <p>Back to homepage</p>
     </RouterLink>
 
     <div class="zodiacPage__overlay">
@@ -55,11 +55,13 @@
 <style>
   .zodiacPage {
     width: 100vw;
+    height: 100vh;
     background-image: url('/images/zodiac-background.png');
     color: var(--light);
   }
 
   .zodiacPage__overlay {
+    height: inherit;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -137,7 +139,7 @@
   }
 
   .horoscope__detail {
-    font-size: 0.6em;
+    font-size: 0.8em;
     color: var(--light); 
   }
 
