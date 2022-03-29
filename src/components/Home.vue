@@ -12,8 +12,8 @@
                 </RouterLink>
             </div>
         </main>
-        <!-- <Footer /> -->
     </div>
+    <Footer />
 </template>
 
 <script>
@@ -25,6 +25,10 @@
                 title: 'DAILY HOROSCOPE',
                 totalSigns: 12
             }
+        },
+
+        components: {
+            Footer
         },
 
         created() {
@@ -39,10 +43,6 @@
             zodiacData() {
                 return this.$store.getters.getZodiacData;
             }
-        },
-
-        components: {
-            Footer
         },
 
         methods: {
