@@ -33,7 +33,6 @@
 </template> 
 
 <script>
-  /* bugfix => when reload zodiacfullpage data is missing  => solution: fetch again (move to store)*/
     export default {
         data() {
             return {
