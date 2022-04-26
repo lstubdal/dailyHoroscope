@@ -11,23 +11,23 @@
       <img class="zodiacPage__symbol" :src="zodiacSign.symbol" :alt="zodiacSign.name">
       <p class="zodiacPage__date">{{ zodiacSign.dateRange}}</p>
       
-      <main class="horoscope">
-        <p class="horoscope__description"> {{ zodiacSign.description }}</p>
+      <div class="horoscope">
+          <p class="horoscope__description"> {{ zodiacSign.description }}</p>
 
-        <section class="horoscope__information">
-            <span class="horoscope__details"> {{ zodiacSign.luckyNumber}}
-              <p class="horoscope__detail">Lucky number</p>
-            </span>
+            <section class="horoscope__information">
+                <span class="horoscope__details"> {{ zodiacSign.luckyNumber}}
+                    <p class="horoscope__detail">Lucky number</p>
+                </span>
 
-            <span class="horoscope__details"> {{ zodiacSign.mood }}
-              <p class="horoscope__detail">Mood</p>
-            </span>
+                <span class="horoscope__details"> {{ zodiacSign.mood }}
+                    <p class="horoscope__detail">Mood</p>
+                </span>
 
-            <span class="horoscope__details"> {{ zodiacSign.compatibility }}
-              <p class="horoscope__detail">Compatibility</p>
-            </span>
-        </section>
-      </main>
+                <span class="horoscope__details"> {{ zodiacSign.compatibility }}
+                    <p class="horoscope__detail">Compatibility</p>
+                </span>
+            </section>
+      </div>
     </div>
   </div>
 </template> 
@@ -35,22 +35,55 @@
 <script>
   /* bugfix => when reload zodiacfullpage data is missing  => solution: fetch again (move to store)*/
     export default {
-      props: {
-          zodiac_slug: {
-              type: String
-          },
-      },
+        data() {
+            return {
+                zodiacSign: null
+            }
+        },
 
-      computed: {
-        zodiacData() {
-            return this.$store.getters.getZodiacData;
+        // fetch again if page reloaded, but only current zodiac sign
+        async created() {
+            const url = `https://aztro.sameerkumar.website/?sign=${this.zodiac_slug}&day=today`;
+            const options = {method: 'POST'};
+            
+            try {
+                const response = await fetch(url, options);
+                this.handleResponseData(response);
+            } catch(error) {
+                console.log('feil fetch zodiac', error);
+            }
+        },
+
+        props: {
+            zodiac_slug: {
+                type: String
+            },
+        },
+
+        computed: {
+            zodiacData() {
+                return this.$store.getters.getZodiacData;
+            }
+        },
+
+        methods: {
+            async handleResponseData(response) {
+                if (response.ok) {
+                    const results = await response.json(); 
+
+                    this.zodiacSign = {
+                        'name': `${this.zodiac_slug}`,
+                        'symbol': `/images/${this.zodiac_slug}.svg`,
+                        'dateRange': results.date_range,
+                        'description': results.description,
+                        'compatibility': results.compatibility,
+                        'mood': results.mood,
+                        'luckyNumber': results.lucky_number
+                        
+                    }
+                }
+            }
         }
-      },
-
-     created() {                                                                                 
-          return this.zodiacSign = this.zodiacData.find(zodiac => zodiac.name === this.zodiac_slug)     /* return slug to the current article (give value to slug prop) source: https://router.vuejs.org/guide/essentials/passing-props.html#boolean-mode */
-      } 
-
     }
 </script>
 

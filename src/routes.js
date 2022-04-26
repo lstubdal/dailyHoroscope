@@ -10,7 +10,8 @@ export default [
 	{ 
 		name: 'zodiac', 		
 		path: '/:zodiac_slug', 		
-		component: Zodiac,		
+		component: Zodiac,	
+		props: true	
 	} 
 ];
 

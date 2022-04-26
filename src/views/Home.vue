@@ -13,24 +13,17 @@
             </div>
         </main>
     </div>
-    <Footer />
 </template>
 
 <script>
-    import Footer from '../components/Footer.vue';
-
     export default {
         data() {
             return {
                 title: 'DAILY HOROSCOPE',
-                totalSigns: 12
+                totalSigns: 12 // avoid double fetching when returning to homepage
             }
         },
-
-        components: {
-            Footer
-        },
-
+        
         created() {
             this.fetchZodiacData()
         },
@@ -48,7 +41,8 @@
         methods: {
             async fetchZodiacData() {
                 this.zodiacSigns.forEach(zodiac => {
-                    if (this.zodiacData.length < this.totalSigns) {  // avoid double fetching when returning to homepage
+                    if (this.zodiacData.length < this.totalSigns) {  
+                        
                         // make async function when fetching inside loop/function
                         const createZodiacObject = async () => {     
                             const url = `https://aztro.sameerkumar.website/?sign=${zodiac}&day=today`;
@@ -61,7 +55,6 @@
                                 console.log('results', hei)
 
                                 // create complete zodiac objects with data from store and api, then push into empty array
-
                                 const zodiacSign = {
                                     'name': zodiac,
                                     'symbol': `/images/${zodiac}.svg`,
@@ -85,7 +78,6 @@
                         }
                     }
                 })
-                console.log('HEIHEI', this.zodiacData)
             }
         }
     }

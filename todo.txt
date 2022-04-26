@@ -1,9 +1,0 @@
-_____BUGFIX______
-
-- tilbake : fetcher 2 ganger
-- ikke reload page
-
-
-________?__________
-- today, tomorrow?
-- fullpage background with random universe image from unsplash api
