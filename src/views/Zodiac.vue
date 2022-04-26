@@ -170,7 +170,5 @@
         .horoscope__details {
           font-size: 1.5em;
         }
-
-
     }
 </style>

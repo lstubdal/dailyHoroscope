@@ -1,8 +1,16 @@
-import HomeView from './views/HomeView.vue';
-import ZodiacView from './views/ZodiacView.vue';
+import Home from './views/Home.vue';
+import Zodiac from './views/Zodiac.vue';
 
 export default [
-	{ name: 'home', 		path: '/', 					component: HomeView },
-	{ name: 'zodiac', 		path: '/:zodiac_slug', 		component: ZodiacView,		props: true } // set as prop to access correct zodiac info on fullopage
+	{ 
+		name: 'home', 		
+		path: '/', 					
+		component: Home
+	},
+	{ 
+		name: 'zodiac', 		
+		path: '/:zodiac_slug', 		
+		component: Zodiac,		
+	} 
 ];
 
