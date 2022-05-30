@@ -1,5 +1,4 @@
 <template>
-  <!-- show horoscope based on users click -->
   <div class="zodiacPage" v-if="zodiacSign">
     <RouterLink :to="{ name: 'home' }" class="zodiacPage__back">
       <img src="/images/back.svg" alt="back to homepage">
@@ -12,21 +11,21 @@
       <p class="zodiacPage__date">{{ zodiacSign.dateRange}}</p>
       
       <div class="horoscope">
-          <p class="horoscope__description"> {{ zodiacSign.description }}</p>
+        <p class="horoscope__description"> {{ zodiacSign.description }}</p>
 
-            <section class="horoscope__information">
-                <span class="horoscope__details"> {{ zodiacSign.luckyNumber}}
-                    <p class="horoscope__detail">Lucky number</p>
-                </span>
+        <section class="horoscope__information">
+            <span class="horoscope__details"> {{ zodiacSign.luckyNumber}}
+                <p class="horoscope__detail">Lucky number</p>
+            </span>
 
-                <span class="horoscope__details"> {{ zodiacSign.mood }}
-                    <p class="horoscope__detail">Mood</p>
-                </span>
+            <span class="horoscope__details"> {{ zodiacSign.mood }}
+                <p class="horoscope__detail">Mood</p>
+            </span>
 
-                <span class="horoscope__details"> {{ zodiacSign.compatibility }}
-                    <p class="horoscope__detail">Compatibility</p>
-                </span>
-            </section>
+            <span class="horoscope__details"> {{ zodiacSign.compatibility }}
+                <p class="horoscope__detail">Compatibility</p>
+            </span>
+          </section>
       </div>
     </div>
   </div>
@@ -36,7 +35,8 @@
     export default {
         data() {
             return {
-                zodiacSign: null
+                zodiacSign: null,
+                error: ''
             }
         },
 
@@ -49,7 +49,7 @@
                 const response = await fetch(url, options);
                 this.handleResponseData(response);
             } catch(error) {
-                console.log('feil fetch zodiac', error);
+                this.error = error.message;
             }
         },
 
@@ -69,18 +69,28 @@
             async handleResponseData(response) {
                 if (response.ok) {
                     const results = await response.json(); 
-
-                    this.zodiacSign = {
-                        'name': `${this.zodiac_slug}`,
-                        'symbol': `/images/${this.zodiac_slug}.svg`,
-                        'dateRange': results.date_range,
-                        'description': results.description,
-                        'compatibility': results.compatibility,
-                        'mood': results.mood,
-                        'luckyNumber': results.lucky_number
-                        
+                    this.createZodiacObject(results)    
+                } else {
+                  if (response.status === 404) {
+                        throw new Error("Can't find url")
+                    } else if (response.status === 500) {
+                        throw new Error("Server error")
+                    } else {
+                        throw new Error("something went wrong");
                     }
                 }
+            },
+
+            async createZodiacObject(results) {
+            return this.zodiacSign = {
+                      'name': `${this.zodiac_slug}`,
+                      'symbol': `/images/${this.zodiac_slug}.svg`,
+                      'dateRange': results.date_range,
+                      'description': results.description,
+                      'compatibility': results.compatibility,
+                      'mood': results.mood,
+                      'luckyNumber': results.lucky_number  
+                  }
             }
         }
     }
