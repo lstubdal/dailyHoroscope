@@ -1,6 +1,6 @@
 <template>
 	<RouterView />
-    <!-- <Footer /> -->
+    <Footer />
 </template>
 
 <script>

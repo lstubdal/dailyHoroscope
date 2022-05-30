@@ -1,7 +1,7 @@
 <template>
-  <div class="footer">
+  <footer class="footer">
     <p>Your daily horoscope</p>
-  </div>
+  </footer>
 </template>
 
 <script>
