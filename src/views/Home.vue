@@ -5,6 +5,8 @@
         <main class="zodiacBoard">
             <div v-for="zodiacSign in zodiacData" class="zodiacBoard__sign">
                 <RouterLink :to="{ name: 'zodiac', params: { zodiac_slug: zodiacSign.name }}" class="zodiacBoard__routerlink">
+                    <div v-if="error">{{ error }}</div>
+
                     <img v-if="!error" :src="zodiacSign.symbol" :alt="zodiacSign.name">
                     <h3 v-if="!error"> {{ zodiacSign.name }} </h3>
                     <p v-if="!error"> {{ zodiacSign.dateRange }}</p>
@@ -68,6 +70,7 @@
                     this.createZodiacObject(results, zodiac);
                     
                 } else {
+                    // display error message to user based on status
                     if (response.status === 404) {
                         throw new Error("Can't find url")
                     } else if (response.status === 500) {
@@ -79,6 +82,7 @@
             },
 
             async createZodiacObject(results, zodiac) {
+                // create objects to display zodiacdata easier per sign
                 const zodiacSign = {
                     'name': zodiac,
                     'symbol': `/images/${zodiac}.svg`,
@@ -88,7 +92,9 @@
                     'mood': results.mood,
                     'luckyNumber': results.lucky_number
                 }
-                this.$store.dispatch('addZodiacObject', zodiacSign) //add complete zodiac object to array in store
+
+                //add complete zodiac object to array in store
+                this.$store.dispatch('addZodiacObject', zodiacSign) 
             }
         }
     }

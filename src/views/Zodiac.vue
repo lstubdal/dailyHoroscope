@@ -1,9 +1,6 @@
 <template>
-  <div class="zodiacPage" v-if="zodiacSign">
-    <RouterLink :to="{ name: 'home' }" class="zodiacPage__back">
-      <img src="/images/back.svg" alt="back to homepage">
-      <p>Back to homepage</p>
-    </RouterLink>
+  <div class="zodiacPage" v-if="!error">
+    <BackToFrontpage />
 
     <div class="zodiacPage__overlay">
       <h1 class="zodiacPage__title"> {{ zodiacSign.name }}</h1>
@@ -32,68 +29,74 @@
 </template> 
 
 <script>
-    export default {
-        data() {
-            return {
-                zodiacSign: null,
-                error: ''
+  import BackToFrontpage from '../components/BackToFrontpage.vue';
+
+  export default {
+    data() {
+      return {
+          zodiacSign: null,
+          error: ''
+      }
+    },
+
+    components: {
+      BackToFrontpage
+    },
+
+    // fetch again if page reloaded, but only current zodiac sign
+    async created() {
+      const url = `https://aztro.sameerkumar.website/?sign=${this.zodiac_slug}&day=today`;
+      const options = {method: 'POST'};
+      
+      try {
+          const response = await fetch(url, options);
+          this.handleResponseData(response);
+      } catch(error) {
+          this.error = error.message;
+      }
+    },
+
+    props: {
+      zodiac_slug: {
+          type: String
+      }
+    },
+
+    computed: {
+      zodiacData() {
+          return this.$store.getters.getZodiacData;
+      }
+    },
+
+    methods: {
+      async handleResponseData(response) {
+          if (response.ok) {
+              const results = await response.json(); 
+              this.createZodiacObject(results)    
+          } else {
+            if (response.status === 404) {
+                  throw new Error("Can't find url")
+              } else if (response.status === 500) {
+                  throw new Error("Server error")
+              } else {
+                  throw new Error("something went wrong");
+              }
+          }
+      },
+
+      async createZodiacObject(results) {
+        return this.zodiacSign = {
+                'name': `${this.zodiac_slug}`,
+                'symbol': `/images/${this.zodiac_slug}.svg`,
+                'dateRange': results.date_range,
+                'description': results.description,
+                'compatibility': results.compatibility,
+                'mood': results.mood,
+                'luckyNumber': results.lucky_number  
             }
-        },
-
-        // fetch again if page reloaded, but only current zodiac sign
-        async created() {
-            const url = `https://aztro.sameerkumar.website/?sign=${this.zodiac_slug}&day=today`;
-            const options = {method: 'POST'};
-            
-            try {
-                const response = await fetch(url, options);
-                this.handleResponseData(response);
-            } catch(error) {
-                this.error = error.message;
-            }
-        },
-
-        props: {
-            zodiac_slug: {
-                type: String
-            },
-        },
-
-        computed: {
-            zodiacData() {
-                return this.$store.getters.getZodiacData;
-            }
-        },
-
-        methods: {
-            async handleResponseData(response) {
-                if (response.ok) {
-                    const results = await response.json(); 
-                    this.createZodiacObject(results)    
-                } else {
-                  if (response.status === 404) {
-                        throw new Error("Can't find url")
-                    } else if (response.status === 500) {
-                        throw new Error("Server error")
-                    } else {
-                        throw new Error("something went wrong");
-                    }
-                }
-            },
-
-            async createZodiacObject(results) {
-            return this.zodiacSign = {
-                      'name': `${this.zodiac_slug}`,
-                      'symbol': `/images/${this.zodiac_slug}.svg`,
-                      'dateRange': results.date_range,
-                      'description': results.description,
-                      'compatibility': results.compatibility,
-                      'mood': results.mood,
-                      'luckyNumber': results.lucky_number  
-                  }
-            }
-        }
+      }
     }
+  }
 </script>
 
 <style>
@@ -112,23 +115,6 @@
     align-items: center;
     background-color: var(--dark);
     padding: var(--padding-large);
-  }
-
-  .zodiacPage__back {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--padding-medium);
-    font-size: 1.5em;
-    cursor: pointer;
-    color: var(--light);
-    text-decoration: none;
-  }
-
-  .zodiacPage__back:hover {
-    text-decoration: underline;
-    color: var(--highlight);
   }
 
   .zodiacPage__title {
@@ -187,30 +173,30 @@
     color: var(--light); 
   }
 
-    /********* RESPONSIVE ********/
-    @media screen and (max-width: 800px) {
-        .zodiacPage__title {
-          font-size: 2.5em;
-          margin-top: var(--margin-small);
-        }
-
-        .horoscope__information {
-          justify-content: center;
-        }
-
-        .zodiacPage__symbol {
-          width: var(--symbol-size-responsive);
-          height: var(--symbol-size-responsive);
-          margin: var(--margin-small);
-        }
-
-        .horoscope__description {
-          font-size: 1.5em;
-          padding: 3%;
-        }
-
-        .horoscope__details {
-          font-size: 1.5em;
-        }
+  /********* RESPONSIVE ********/
+  @media screen and (max-width: 800px) {
+    .zodiacPage__title {
+      font-size: 2.5em;
+      margin-top: var(--margin-small);
     }
+
+    .horoscope__information {
+      justify-content: center;
+    }
+
+    .zodiacPage__symbol {
+      width: var(--symbol-size-responsive);
+      height: var(--symbol-size-responsive);
+      margin: var(--margin-small);
+    }
+
+    .horoscope__description {
+      font-size: 1.5em;
+      padding: 3%;
+    }
+
+    .horoscope__details {
+      font-size: 1.5em;
+    }
+  }
 </style>

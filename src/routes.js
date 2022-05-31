@@ -11,7 +11,7 @@ export default [
 		name: 'zodiac', 		
 		path: '/:zodiac_slug', 		
 		component: Zodiac,	
-		props: true	
+		props: true	// declare as prop when routing to specific zodiac sign
 	} 
 ];
 
