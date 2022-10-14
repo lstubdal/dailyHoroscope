@@ -105,10 +105,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100vw;
+        padding: var(--super-large);
+        height: auto;
+        max-width: 100%;
         background-image: url('/images/background-home.jpg');
         background-size: cover;
-        padding: var(--super-large);
+        background-attachment: fixed; /* make the background static */ 
     }
 
     .home__title {
@@ -154,6 +156,7 @@
 
     /********* RESPONSIVE TABLET ********/
     @media screen and (max-width: 800px) {
+
         .zodiacBoard {
             grid-template-columns: repeat(3, 1fr);
         }
