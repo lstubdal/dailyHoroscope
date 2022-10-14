@@ -144,7 +144,7 @@
 
   .horoscope__description {
     line-height: 1;
-    font-size: 2em;
+    font-size: 1.7em;
     text-align: center;
     padding: var(--padding-medium) var(--padding-xlarge) var(--padding-large) var(--padding-xlarge);
   }
@@ -176,12 +176,17 @@
   /********* RESPONSIVE ********/
   @media screen and (max-width: 800px) {
     .zodiacPage__title {
-      font-size: 2.5em;
+      font-size: 2.4em;
       margin-top: var(--margin-small);
+    }
+
+    .zodiacPage__date {
+      font-size: 1.4em;
     }
 
     .horoscope__information {
       justify-content: center;
+      flex-direction: column;
     }
 
     .zodiacPage__symbol {

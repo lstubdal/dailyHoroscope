@@ -20,7 +20,7 @@
     export default {
         data() {
             return {
-                title: 'DAILY HOROSCOPE',
+                title: 'DAILY     HOROSCOPE',
                 totalSigns: 12, // avoid double fetching when returning to homepage
                 error: ''
             }
@@ -145,6 +145,7 @@
     }
 
     .zodiacBoard__routerlink:hover {
+        border-radius: 8px;
         background-color: var(--hover);
     }
  
